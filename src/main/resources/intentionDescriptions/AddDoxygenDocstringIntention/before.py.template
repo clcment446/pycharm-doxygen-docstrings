@@ -1,0 +1,2 @@
+def <spot>area</spot>(width: float, height: float) -> float:
+    return width * height

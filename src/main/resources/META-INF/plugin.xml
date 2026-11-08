@@ -1,0 +1,39 @@
+<idea-plugin>
+    <id>io.github.clcment446.doxygen-docstrings</id>
+    <name>Doxygen Python Docstrings</name>
+    <vendor url="https://github.com/clcment446/pycharm-doxygen-docstrings">clcment446</vendor>
+    <description><![CDATA[
+    Support for Doxygen-style tags (<code>@brief</code>, <code>@param</code>, <code>@return</code>, ...) in Python docstrings:
+    <ul>
+      <li>"Add Doxygen docstring" intention (Alt+Enter on a function)</li>
+      <li>Inspection checking <code>@param</code> tags against the signature, with quick-fixes</li>
+      <li>Configurable highlighting of tags (Settings | Editor | Color Scheme | Doxygen (Python))</li>
+      <li>Structured Quick Documentation (Ctrl+Q); disable with registry key <code>doxygen.docstrings.quickDoc</code></li>
+    </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.python</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <intentionAction>
+            <language>Python</language>
+            <className>io.github.clcment446.doxygen.AddDoxygenDocstringIntention</className>
+            <category>Python</category>
+        </intentionAction>
+
+        <localInspection language="Python" shortName="DoxygenParamMismatch"
+                         displayName="Doxygen @param tags do not match signature"
+                         groupName="Python" enabledByDefault="true" level="WARNING"
+                         implementationClass="io.github.clcment446.doxygen.DoxygenParamInspection"/>
+
+        <annotator language="Python" implementationClass="io.github.clcment446.doxygen.DoxygenAnnotator"/>
+        <colorSettingsPage implementation="io.github.clcment446.doxygen.DoxygenColorSettingsPage"/>
+
+        <!-- Quick Documentation: isolated, can be switched off via the registry key below. -->
+        <lang.documentationProvider language="Python" order="first" id="doxygenPythonDocumentationProvider"
+                                    implementationClass="io.github.clcment446.doxygen.DoxygenDocumentationProvider"/>
+        <registryKey key="doxygen.docstrings.quickDoc" defaultValue="true"
+                     description="Render Doxygen Python docstrings in Quick Documentation"/>
+    </extensions>
+</idea-plugin>

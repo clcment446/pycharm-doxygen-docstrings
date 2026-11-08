@@ -1,0 +1,8 @@
+def area(width: float, height: float) -> float:
+    """@brief 
+
+    @param width 
+    @param height 
+    @return 
+    """
+    return width * height
